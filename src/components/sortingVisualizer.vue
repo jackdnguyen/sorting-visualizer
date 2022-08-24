@@ -14,6 +14,7 @@
 import { visualizeSelectionSort } from "../algorithms/selectionSort/visualizeSelectionSort";
 import SelectionSortPseudo from "../algorithms/selectionSort/selectionSortPseudo";
 
+
 export default {
   components: {
     SelectionSortPseudo,
@@ -80,15 +81,14 @@ export default {
       }
     },
     visualizeSortingAlgo() {
+      this.pseudoSections = document.querySelectorAll(
+        ".pseudo-code-container p"
+      );
       if (this.selectedAlgorithm.toLowerCase() == "selection") {
         this.runSelectionSort();
       }
     },
     runSelectionSort() {
-      this.pseudoSections = document.querySelectorAll(
-        ".pseudo-code-container p"
-      );
-
       visualizeSelectionSort(
         this.array,
         this.animationTime,
