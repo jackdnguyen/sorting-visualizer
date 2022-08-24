@@ -12,9 +12,9 @@ export function visualizeSelectionSort(
   pseudoSections
 ) {
   let sortedArr = selectionSort(array);
-  let currElmColor = "#2d695a";
+  let currElmColor = "#0b3f53";
   let compareElmColor = "#ffe4bb";
-  let minElmColor = "#bb5041";
+  let minElmColor = "#e05656";
   let sortedColor = "#73c2a4";
   let unsortedColor = "#d8aa75";
   pseudoSections[0].classList.add("active");
@@ -139,24 +139,20 @@ function checkPseudoAnim(data, arrFromNodeList) {
     return;
   }
   if (!data.isOutJLoop) {
-    pseudoCheckingElm.textContent = `Check whether the value of ${
-      arrFromNodeList[data.compareElm].textContent
-    } smaller than minimum (${arrFromNodeList[data.minIndex].textContent})`;
+    pseudoCheckingElm.textContent = `Check whether the value of ${arrFromNodeList[data.compareElm].textContent
+      } smaller than minimum (${arrFromNodeList[data.minIndex].textContent})`;
   }
   if (data.isChangeMin || data.isOutJLoop) {
-    pseudoCheckingElm.textContent = `Set value ${
-      arrFromNodeList[data.minIndex].textContent
-    } as minimum value`;
+    pseudoCheckingElm.textContent = `Set value ${arrFromNodeList[data.minIndex].textContent
+      } as minimum value`;
   }
   if (data.isCompareIandMin) {
-    pseudoCheckingElm.textContent = `Check whether the value of ${
-      arrFromNodeList[data.compareElm].textContent
-    } and ${arrFromNodeList[data.minIndex].textContent} are different`;
+    pseudoCheckingElm.textContent = `Check whether the value of ${arrFromNodeList[data.compareElm].textContent
+      } and ${arrFromNodeList[data.minIndex].textContent} are different`;
   }
   if (data.isSwap) {
-    pseudoCheckingElm.textContent = `Swap ${
-      arrFromNodeList[data.compareElm].textContent
-    } and ${arrFromNodeList[data.minIndex].textContent}`;
+    pseudoCheckingElm.textContent = `Swap ${arrFromNodeList[data.compareElm].textContent
+      } and ${arrFromNodeList[data.minIndex].textContent}`;
   }
 
 }
