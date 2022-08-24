@@ -3,8 +3,6 @@
     <algo-info />
     <div class="visualization">
       <selection-sort-pseudo v-if="selectedAlgorithm == 'selection'" />
-      <bubble-sort-pseudo v-if="selectedAlgorithm == 'bubble'" />
-      <insertion-sort-pseudo v-if="selectedAlgorithm == 'insertion'" />
       <div class="array-list">
         <div class="bars-container" ref="barContainer"></div>
       </div>
@@ -15,35 +13,28 @@
 <script>
 import { visualizeSelectionSort } from "../algorithms/selectionSort/visualizeSelectionSort";
 import SelectionSortPseudo from "../algorithms/selectionSort/selectionSortPseudo";
-import { visualizeBubbleSort } from "../algorithms/bubbleSort/visualizeBubbleSort";
-import BubbleSortPseudo from "../algorithms/bubbleSort/bubbleSortPseudo"
-import { visualizeInsertionSort } from "../algorithms/insertionSort/visualizeInsertionSort";
-import InsertionSortPseudo from "../algorithms/insertionSort/insertionSortPseudo";
+
 
 export default {
   components: {
     SelectionSortPseudo,
-    BubbleSortPseudo,
-    InsertionSortPseudo,
   },
   mounted() {
     this.getRandomArray();
     let bars = document.querySelectorAll(".bar");
     this.arrFromNodeList = Array.from(bars);
-    this.emitter.on("visualize", (data) => {
+    this.emitter.on('visualize', (data) => {
       this.isShowAlgoInfo = true;
       this.checkSelectedAlgoAndSpeed(data);
       this.visualizeSortingAlgo();
     });
-    this.emitter.on("randomize", (data) => {
+    this.emitter.on('randomize', (data) => {
       console.log(data);
       this.getRandomArray();
     });
-    this.emitter.on("changeAlgo", (data) => {
+    this.emitter.on('changeAlgo', (data) => {
       this.selectedAlgorithm = data;
-      this.pseudoSections = document.querySelectorAll(
-        ".pseudo-code-container p"
-      );
+      this.pseudoSections = document.querySelectorAll(".pseudo-code-container p");
     });
     this.pseudoSections = document.querySelectorAll(".pseudo-code-container p");
   },
@@ -95,10 +86,6 @@ export default {
       );
       if (this.selectedAlgorithm.toLowerCase() == "selection") {
         this.runSelectionSort();
-      } else if(this.selectedAlgorithm.toLowerCase() == "bubble") {
-        this.runBubbleSort();
-      } else if(this.selectedAlgorithm.toLowerCase() == "insertion") {
-        this.runInsertionSort();
       }
     },
     runSelectionSort() {
@@ -109,31 +96,11 @@ export default {
         this.pseudoSections
       );
     },
-    runBubbleSort() {
-      visualizeBubbleSort(
-        this.array,
-        this.animationTime,
-        this.arrFromNodeList,
-        this.pseudoSections
-      );
-    },
-    runInsertionSort() {
-      this.pseudoSections = document.querySelectorAll(
-        ".pseudo-code-container p"
-      );
-
-      visualizeInsertionSort(
-        this.array,
-        this.animationTime,
-        this.arrFromNodeList,
-        this.pseudoSections
-      );
-    },
 
     checkSelectedAlgoAndSpeed(data) {
       if (data.selectedAlgorithm.toLowerCase() == "selection") {
         this.selectedAlgorithm = "selection";
-      }
+      } 
 
       if (data.selectedSpeed == "Slow") {
         this.animationTime = 800;

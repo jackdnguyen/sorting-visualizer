@@ -12,7 +12,7 @@ export default {
   name: "App",
   components: {
     sortingVisualizer,
-    Navbar,
+    Navbar
   },
 };
 </script>
