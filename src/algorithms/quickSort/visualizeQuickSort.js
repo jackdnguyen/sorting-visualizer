@@ -1,4 +1,4 @@
-import { quickSort } from "./quickSort2";
+import { quickSort } from "./quickSort";
 import {
   changeBackgroundColor,
   swapBars,
@@ -12,11 +12,11 @@ export function visualizeQuickSort(
   pseudoSections
 ) {
   let sortedArr = quickSort(array);
-  let currElmColor = "#0b3f53";
-  let compareElmColor = "#ffe4bb";
+  let currElmColor = "#e05656";
+  let compareElmColor = "#0b3f53";
   let unsortedColor = "#d8aa75";
   let sortedColor = "#73c2a4";
-
+  let swapColor = "#ffe4bb";
   for (let i = 0; i < sortedArr.length; i++) {
     disableButton(true);
     setTimeout(() => {
@@ -25,18 +25,15 @@ export function visualizeQuickSort(
       }
       visualizePseudo(sortedArr[i], pseudoSections);
       checkPseudoAnim(sortedArr[i], arrFromNodeList);
-      changeBackgroundColor(
-        sortedArr[i].currElm,
-        currElmColor,
-        arrFromNodeList
-      );
-      changeBackgroundColor(
-        sortedArr[i].compareElm,
-        compareElmColor,
-        arrFromNodeList
-      );
-
-      if (sortedArr[i].isSwap) {
+      
+      if (sortedArr[i].isSetCurr) {
+        changeBackgroundColor(
+          sortedArr[i].currElm,
+          currElmColor,
+          arrFromNodeList
+        );
+      }
+      if (sortedArr[i].isCompare) {
         changeBackgroundColor(
           sortedArr[i].currElm,
           currElmColor,
@@ -45,6 +42,35 @@ export function visualizeQuickSort(
         changeBackgroundColor(
           sortedArr[i].compareElm,
           compareElmColor,
+          arrFromNodeList
+        );
+      }
+      if (sortedArr[i].isSwap && sortedArr[i].isSwapMiddle == false) {
+        changeBackgroundColor(
+          sortedArr[i].currElm,
+          swapColor,
+          arrFromNodeList
+        );
+        changeBackgroundColor(
+          sortedArr[i].compareElm,
+          swapColor,
+          arrFromNodeList
+        );
+        swapBars(
+          sortedArr[i].currElm,
+          sortedArr[i].compareElm,
+          arrFromNodeList
+        );
+      }
+      if (sortedArr[i].isSwapMiddle){
+        changeBackgroundColor(
+          sortedArr[i].currElm,
+          currElmColor,
+          arrFromNodeList
+        );
+        changeBackgroundColor(
+          sortedArr[i].compareElm,
+          swapColor,
           arrFromNodeList
         );
         swapBars(
@@ -94,21 +120,25 @@ function removePreviousActivePseudo() {
 }
 
 function visualizePseudo(data, pseudoSections) {
+  if (data.firstElm) {
+    removePreviousActivePseudo();
+    pseudoSections[0].classList.add("active");
+  }
   if (data.isSetCurr) {
     removePreviousActivePseudo();
-    pseudoSections[2].classList.add("active");
+    pseudoSections[1].classList.add("active");
   }
   if (data.isCompare) {
     removePreviousActivePseudo();
     pseudoSections[3].classList.add("active");
   }
-  if (data.isSwap) {
+  if (data.isSwap && data.isSwapMiddle == false) {
     removePreviousActivePseudo();
     pseudoSections[4].classList.add("active");
   }
-  if (data.currElm == 0 && data.compareElm == 0) {
+  if (data.isSwapMiddle) {
     removePreviousActivePseudo();
-    pseudoSections[0].classList.add("active");
+    pseudoSections[5].classList.add("active");
   }
 }
 
@@ -116,21 +146,20 @@ function checkPseudoAnim(data, arrFromNodeList) {
   const pseudoCheckingElm = document.querySelector(
     ".pseudo-code-container .checking"
   );
-  if (data.currElm == 0 && data.compareElm == 0) {
-    pseudoCheckingElm.textContent = ` first value as sorted`;
-  }
-
   if (data.isSetCurr) {
     pseudoCheckingElm.textContent = `Set value ${arrFromNodeList[data.currElm].textContent
-      } as current`;
+      } as pivot`;
   }
   if (data.isCompare) {
     pseudoCheckingElm.textContent = `Check whether the value of ${arrFromNodeList[data.compareElm].textContent
-      } < ${arrFromNodeList[data.currElm].textContent
-      },  if true, iterate until element smaller than current`;
+      } < Pivot: ${arrFromNodeList[data.currElm].textContent}`;
   }
-  if (data.isSwap) {
+  if (data.isSwap && data.isSwapMiddle == false) {
     pseudoCheckingElm.textContent = `Swap ${arrFromNodeList[data.compareElm].textContent
-      } and ${arrFromNodeList[data.currElm].textContent}`;
+      } into left sub-array`;
+  }
+  if (data.isSwapMiddle) {
+    pseudoCheckingElm.textContent = `Swap ${arrFromNodeList[data.currElm].textContent
+    } to middle`;
   }
 }

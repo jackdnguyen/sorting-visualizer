@@ -9,10 +9,10 @@
         </div>
       </div>
       <ul class="ul-list" v-if="isShowingAlgoList">
+        <li @click="changeSelectedAlgo('Quick')">Quick Sort</li>
         <li @click="changeSelectedAlgo('Selection')">Selection Sort</li>
         <li @click="changeSelectedAlgo('Bubble')">Bubble Sort</li>
         <li @click="changeSelectedAlgo('Insertion')">Insertion Sort</li>
-        <li @click="changeSelectedAlgo('Quick')">Quick Sort</li>
       </ul>
     </div>
     <button class="btn-style visualize-btn" @click="Visualize">
@@ -43,7 +43,7 @@
 export default {
   data() {
     return {
-      selectedAlgorithm: "Selection",
+      selectedAlgorithm: "Quick",
       isShowingAlgoList: false,
       selectedSpeed: "Fast",
       isShowingSpeedList: false,

@@ -60,7 +60,7 @@ export default {
       arrFromNodeList: [],
       animationTime: 200,
       pseudoSections: null,
-      selectedAlgorithm: "selection",
+      selectedAlgorithm: "quick",
       isShowAlgoInfo: false,
     };
   },
