@@ -59,7 +59,8 @@ export function visualizeQuickSort(
         swapBars(
           sortedArr[i].currElm,
           sortedArr[i].compareElm,
-          arrFromNodeList
+          arrFromNodeList,
+          true
         );
       }
       if (sortedArr[i].isSwapMiddle){
@@ -76,7 +77,8 @@ export function visualizeQuickSort(
         swapBars(
           sortedArr[i].currElm,
           sortedArr[i].compareElm,
-          arrFromNodeList
+          arrFromNodeList,
+          true
         );
       }
     }, i * animationTime);
@@ -108,7 +110,6 @@ export function visualizeQuickSort(
         }, 300);
       }
     }, (i + 1) * animationTime);
-    console.log(`Index ${i} and ${sortedArr[i]}`);
   }
 }
 

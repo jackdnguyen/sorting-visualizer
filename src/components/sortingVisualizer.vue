@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <algo-info />
+    <sorting-info />
     <div class="visualization">
       <selection-sort-pseudo v-if="selectedAlgorithm == 'selection'" />
       <bubble-sort-pseudo v-if="selectedAlgorithm == 'bubble'" />
@@ -22,6 +22,8 @@ import { visualizeInsertionSort } from "../algorithms/insertionSort/visualizeIns
 import InsertionSortPseudo from "../algorithms/insertionSort/insertionSortPseudo";
 import { visualizeQuickSort } from "../algorithms/quickSort/visualizeQuickSort";
 import QuickSortPseudo from "../algorithms/quickSort/quickSortPseudo";
+import SortingInfo from "../components/sortingInfo.vue";
+
 
 export default {
   components: {
@@ -29,6 +31,7 @@ export default {
     BubbleSortPseudo,
     InsertionSortPseudo,
     QuickSortPseudo,
+    SortingInfo
   },
   mounted() {
     this.getRandomArray();

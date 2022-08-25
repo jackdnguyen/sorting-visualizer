@@ -2,13 +2,17 @@ export function changeBackgroundColor(index, color, array) {
   array[index].style.backgroundColor = color;
 }
 
-export async function swapBars(index1, index2, array) {
+export async function swapBars(index1, index2, array, quickSort = false) {
   let bars = array;
   const translateBar1 = getTranslateValues(bars[index1]);
   const translateBar2 = getTranslateValues(bars[index2]);
   bars[index1].style.transform = `translate( ${translateBar1.x}px, 100px )`;
   bars[index2].style.transform = `translate( ${translateBar2.x}px, 100px )`;
-  await delay(10);
+  if (quickSort){
+    await delay(10);
+  } else {
+    await delay(100);
+  }
   bars[index1].style.transform = `translate( ${translateBar2.x}px, 0% )`;
   bars[index2].style.transform = `translate( ${translateBar1.x}px, 0% )`;
 
