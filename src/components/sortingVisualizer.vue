@@ -3,6 +3,9 @@
     <algo-info />
     <div class="visualization">
       <selection-sort-pseudo v-if="selectedAlgorithm == 'selection'" />
+      <bubble-sort-pseudo v-if="selectedAlgorithm == 'bubble'" />
+      <insertion-sort-pseudo v-if="selectedAlgorithm == 'insertion'" />
+      <quick-sort-pseudo v-if="selectedAlgorithm == 'quick'" />
       <div class="array-list">
         <div class="bars-container" ref="barContainer"></div>
       </div>
@@ -13,28 +16,41 @@
 <script>
 import { visualizeSelectionSort } from "../algorithms/selectionSort/visualizeSelectionSort";
 import SelectionSortPseudo from "../algorithms/selectionSort/selectionSortPseudo";
-
+import { visualizeBubbleSort } from "../algorithms/bubbleSort/visualizeBubbleSort";
+import BubbleSortPseudo from "../algorithms/bubbleSort/bubbleSortPseudo";
+import { visualizeInsertionSort } from "../algorithms/insertionSort/visualizeInsertionSort";
+import InsertionSortPseudo from "../algorithms/insertionSort/insertionSortPseudo";
+import { visualizeQuickSort } from "../algorithms/quickSort/visualizeQuickSort";
+import QuickSortPseudo from "../algorithms/quickSort/quickSortPseudo";
 
 export default {
   components: {
     SelectionSortPseudo,
+    BubbleSortPseudo,
+    InsertionSortPseudo,
+    QuickSortPseudo,
   },
   mounted() {
     this.getRandomArray();
     let bars = document.querySelectorAll(".bar");
     this.arrFromNodeList = Array.from(bars);
-    this.emitter.on('visualize', (data) => {
+    this.emitter.on("visualize", (data) => {
       this.isShowAlgoInfo = true;
       this.checkSelectedAlgoAndSpeed(data);
       this.visualizeSortingAlgo();
     });
-    this.emitter.on('randomize', (data) => {
+    this.emitter.on("randomize", (data) => {
       console.log(data);
       this.getRandomArray();
     });
-    this.emitter.on('changeAlgo', (data) => {
+    this.emitter.on("changeAlgo", (data) => {
       this.selectedAlgorithm = data;
-      this.pseudoSections = document.querySelectorAll(".pseudo-code-container p");
+      if (this.selectedAlgorithm.toLowerCase() == "quick") {
+        this.getRandomArray();
+      }
+      this.pseudoSections = document.querySelectorAll(
+        ".pseudo-code-container p"
+      );
     });
     this.pseudoSections = document.querySelectorAll(".pseudo-code-container p");
   },
@@ -42,7 +58,7 @@ export default {
     return {
       array: [],
       arrFromNodeList: [],
-      animationTime: 150,
+      animationTime: 200,
       pseudoSections: null,
       selectedAlgorithm: "selection",
       isShowAlgoInfo: false,
@@ -63,12 +79,25 @@ export default {
         let value = Math.floor(
           Math.random() * (maxValue - minValue) + minValue
         );
-        this.array.push(value);
-        let div = document.createElement("div");
-        div.className = "bar";
-        div.textContent = value;
-        div.style.height = value * 10 + "px";
-        this.$refs.barContainer.appendChild(div);
+        if (this.selectedAlgorithm.toLowerCase() == "quick") {
+          if (this.array.includes(value) == true) {
+            i--;
+          } else {
+            this.array.push(value);
+            let div = document.createElement("div");
+            div.className = "bar";
+            div.textContent = value;
+            div.style.height = value * 10 + "px";
+            this.$refs.barContainer.appendChild(div);
+          }
+        } else {
+          this.array.push(value);
+          let div = document.createElement("div");
+          div.className = "bar";
+          div.textContent = value;
+          div.style.height = value * 10 + "px";
+          this.$refs.barContainer.appendChild(div);
+        }
       }
       this.transformAllBars();
     },
@@ -86,6 +115,12 @@ export default {
       );
       if (this.selectedAlgorithm.toLowerCase() == "selection") {
         this.runSelectionSort();
+      } else if (this.selectedAlgorithm.toLowerCase() == "bubble") {
+        this.runBubbleSort();
+      } else if (this.selectedAlgorithm.toLowerCase() == "insertion") {
+        this.runInsertionSort();
+      } else if (this.selectedAlgorithm.toLowerCase() == "quick") {
+        this.runQuickSort();
       }
     },
     runSelectionSort() {
@@ -96,18 +131,43 @@ export default {
         this.pseudoSections
       );
     },
-
+    runBubbleSort() {
+      visualizeBubbleSort(
+        this.array,
+        this.animationTime,
+        this.arrFromNodeList,
+        this.pseudoSections
+      );
+    },
+    runInsertionSort() {
+      visualizeInsertionSort(
+        this.array,
+        this.animationTime,
+        this.arrFromNodeList,
+        this.pseudoSections
+      );
+    },
+    runQuickSort() {
+      this.pseudoSections = document.querySelectorAll(
+        ".pseudo-code-container p"
+      );
+      visualizeQuickSort(
+        this.array,
+        this.animationTime,
+        this.arrFromNodeList,
+        this.pseudoSections
+      );
+    },
     checkSelectedAlgoAndSpeed(data) {
       if (data.selectedAlgorithm.toLowerCase() == "selection") {
         this.selectedAlgorithm = "selection";
-      } 
-
+      }
       if (data.selectedSpeed == "Slow") {
         this.animationTime = 800;
       } else if (data.selectedSpeed == "Medium") {
         this.animationTime = 400;
       } else if (data.selectedSpeed == "Fast") {
-        this.animationTime = 150;
+        this.animationTime = 200;
       }
     },
   },

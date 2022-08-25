@@ -10,6 +10,9 @@
       </div>
       <ul class="ul-list" v-if="isShowingAlgoList">
         <li @click="changeSelectedAlgo('Selection')">Selection Sort</li>
+        <li @click="changeSelectedAlgo('Bubble')">Bubble Sort</li>
+        <li @click="changeSelectedAlgo('Insertion')">Insertion Sort</li>
+        <li @click="changeSelectedAlgo('Quick')">Quick Sort</li>
       </ul>
     </div>
     <button class="btn-style visualize-btn" @click="Visualize">
@@ -53,9 +56,10 @@ export default {
   },
   methods: {
     changeSelectedAlgo(val) {
+      console.log(val);
       this.selectedAlgorithm = val;
       this.isShowingAlgoList = false;
-      this.emitter.emit('changeAlgo', val.toLowerCase());
+      this.emitter.emit("changeAlgo", val.toLowerCase());
     },
     openAlgoList() {
       this.isShowingAlgoList = !this.isShowingAlgoList;
@@ -70,13 +74,13 @@ export default {
       this.isShowingAlgoList = false;
     },
     Visualize() {
-      this.emitter.emit('visualize', {
+      this.emitter.emit("visualize", {
         selectedAlgorithm: this.selectedAlgorithm,
         selectedSpeed: this.selectedSpeed,
       });
     },
     randomizeArray() {
-      this.emitter.emit('randomize', null);
+      this.emitter.emit("randomize", null);
     },
   },
 };

@@ -8,7 +8,7 @@ export async function swapBars(index1, index2, array) {
   const translateBar2 = getTranslateValues(bars[index2]);
   bars[index1].style.transform = `translate( ${translateBar1.x}px, 100px )`;
   bars[index2].style.transform = `translate( ${translateBar2.x}px, 100px )`;
-  await delay(100);
+  await delay(10);
   bars[index1].style.transform = `translate( ${translateBar2.x}px, 0% )`;
   bars[index2].style.transform = `translate( ${translateBar1.x}px, 0% )`;
 
