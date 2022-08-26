@@ -1,4 +1,9 @@
-# hello-world
+# Sorting-Visualizer
+Hello, this project was intended for myself and others to get a deeper understanding of sorting algorithms.
+Psuedo-Code implementation and visualizations of the elements help to understand what is happening underneath
+these popular sorting algorithms. 
+
+Deployed at: https://jackdnguyen.github.io/sorting-visualizer/
 
 ## Project setup
 ```
